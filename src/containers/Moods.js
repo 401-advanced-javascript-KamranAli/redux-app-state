@@ -3,12 +3,14 @@ import { connect } from 'react-redux';
 import Controls from '../components/controls/Controls';
 import Face from '../components/face/Face';
 
-const EmojiFace = ({ face ,controlActions, handleSelection }) => (
-  <>
-    <Controls actions={controlActions} handleSelection={handleSelection} />
-    <Face emoji={face} />
-  </>
-);
+const EmojiFace = ({ face, controlActions, handleSelection }) => {
+  return (
+    <>
+      <Controls actions={controlActions} handleSelection={handleSelection} />
+      <Face emoji={face} />
+    </>
+  )
+};
 
 const actions = [
   { name: 'DRINK_COFFEE', text: 'Drink Coffee', stateName: 'coffees' },
@@ -33,47 +35,42 @@ export const getFace = state => {
   return '😀';
 };
 
-export default class Moods extends Component {
-  // state = {
-  //   coffees: 0,
-  //   snacks: 0,
-  //   naps: 0,
-  //   studies: 0
-  // }
+const mapStateToProps = state => ({
+  coffees: state.coffees,
+  snacks: state.snacks,
+  naps: state.naps,
+  studies: state.studies
+})
 
-  handleSelection = name => {
-    switch (name) {
-      case 'DRINK_COFFEE':
-        this.setState(state => ({ coffees: state.coffees + 1 }));
-        break;
-      case 'EAT_SNACK':
-        this.setState(state => ({ snacks: state.snacks + 1 }));
-        break;
-      case 'TAKE_NAP':
-        this.setState(state => ({ naps: state.naps + 1 }));
-        break;
-      case 'STUDY':
-        this.setState(state => ({ studies: state.studies + 1 }));
-        break;
-      default:
-        console.log(`unhandled name: ${name}`);
-    }
+const mapDispatchToProps = dispatch => ({
+  coffees() {
+    dispatch({
+      type: 'DRINK_COFFEE'
+    });
+  },
+  snacks() {
+    dispatch({
+      type: 'EAT_SNACK'
+    });
+  },
+  naps() {
+    dispatch({
+      type: 'TAKE_NAP'
+    });
+  },
+  studies() {
+    dispatch({
+      type: 'STUDY'
+    });
   }
+})
 
-  render() {
-    const face = getFace(this.state);
-    const controlActions = actions.map(action => ({
-      ...action,
-      count: this.state[action.stateName]
-    }));
-
-    // return (
-    //   <>
-    //     <Controls actions={controlActions} handleSelection={this.handleSelection} />
-    //     <Face emoji={face} />
-    //   </>
-    // );
-  }
+render() {
+  const face = getFace(this.state);
+  const controlActions = actions.map(action => ({
+    ...action,
+    count: this.state[action.stateName]
+  }));
 }
 
 const MoodsContainer = connect(
