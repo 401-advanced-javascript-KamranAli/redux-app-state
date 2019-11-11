@@ -1,6 +1,14 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Controls from '../components/controls/Controls';
 import Face from '../components/face/Face';
+
+const EmojiFace = ({ face ,controlActions, handleSelection }) => (
+  <>
+    <Controls actions={controlActions} handleSelection={handleSelection} />
+    <Face emoji={face} />
+  </>
+);
 
 const actions = [
   { name: 'DRINK_COFFEE', text: 'Drink Coffee', stateName: 'coffees' },
@@ -15,26 +23,26 @@ export const isEducated = state => state.studies > 2;
 export const isHungry = state => state.snacks < 1;
 
 export const getFace = state => {
-  if(isTired(state) && isHungry(state)) return '🤬';
-  if(isHyper(state) && isHungry(state)) return '🤮';
-  if(isTired(state)) return '😴';
-  if(isHyper(state)) return '🙀';
-  if(isEducated(state)) return '🤯';
-  if(isHungry(state)) return '😡';
+  if (isTired(state) && isHungry(state)) return '🤬';
+  if (isHyper(state) && isHungry(state)) return '🤮';
+  if (isTired(state)) return '😴';
+  if (isHyper(state)) return '🙀';
+  if (isEducated(state)) return '🤯';
+  if (isHungry(state)) return '😡';
 
   return '😀';
 };
 
 export default class Moods extends Component {
-  state = {
-    coffees: 0,
-    snacks: 0,
-    naps: 0,
-    studies: 0
-  }
+  // state = {
+  //   coffees: 0,
+  //   snacks: 0,
+  //   naps: 0,
+  //   studies: 0
+  // }
 
   handleSelection = name => {
-    switch(name) {
+    switch (name) {
       case 'DRINK_COFFEE':
         this.setState(state => ({ coffees: state.coffees + 1 }));
         break;
@@ -59,11 +67,18 @@ export default class Moods extends Component {
       count: this.state[action.stateName]
     }));
 
-    return (
-      <>
-        <Controls actions={controlActions} handleSelection={this.handleSelection}/>
-        <Face emoji={face} />
-      </>
-    );
+    // return (
+    //   <>
+    //     <Controls actions={controlActions} handleSelection={this.handleSelection} />
+    //     <Face emoji={face} />
+    //   </>
+    // );
   }
 }
+
+const MoodsContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(EmojiFace);
+
+export default MoodsContainer;
