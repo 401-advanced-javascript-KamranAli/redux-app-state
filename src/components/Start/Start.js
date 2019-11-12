@@ -7,9 +7,11 @@ const Start = ({ handleStart }) => {
     <div>
       <button onClick={handleStart}>Start Game</button>
     </div>
-  )
+  );
 };
 
 Start.propTypes = {
   handleStart: PropTypes.func.isRequired
 };
+
+export default Start;

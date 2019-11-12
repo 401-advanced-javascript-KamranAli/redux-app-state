@@ -5,18 +5,23 @@ import Controls from '../components/controls/Controls';
 import Face from '../components/face/Face';
 import actions from './MoodsActions';
 import { getFace } from './MoodsSelectors';
+import Start from '../components/Start/Start';
 
-const Moods = ({ state, faceAction }) => {
+const Moods = ({ state, faceAction, handleStart }) => {
   const face = getFace(state);
   const controlActions = actions.map(action => ({
     ...action,
     count: state[action.stateName]
   }));
+
+  if(!state.start) {
+    return <Start handleStart={handleStart} />;
+  }
+
   return (
     <>
       <Controls actions={controlActions} handleSelection={faceAction} />
       <Face emoji={face} />
-      <button>Start Game</button>
     </>
   );
 };
@@ -27,7 +32,8 @@ const mapStateToProps = state => (
       coffees: state.coffees,
       snacks: state.snacks,
       naps: state.naps,
-      studies: state.studies
+      studies: state.studies,
+      start: state.start
     }
   });
 
@@ -36,12 +42,18 @@ const mapDispatchToProps = dispatch => ({
     dispatch({
       type: name
     });
+  },
+  handleStart() {
+    dispatch({
+      type: 'START'
+    });
   }
 });
 
 Moods.propTypes = {
   state: PropTypes.object,
-  faceAction: PropTypes.func
+  faceAction: PropTypes.func,
+  handleStart: PropTypes.func
 };
 
 const MoodsContainer = connect(
