@@ -12,7 +12,6 @@ const Moods = ({ state, faceAction }) => {
     ...action,
     count: state[action.stateName]
   }));
-
   return (
     <>
       <Controls actions={controlActions} handleSelection={faceAction} />
