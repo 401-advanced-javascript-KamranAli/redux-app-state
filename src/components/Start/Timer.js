@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Store from '../store';
 
 const Timer = ({ reset }) => {
-  const [time, setTime] = useState(10);
+  const [time, setTime] = useState(3);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -16,7 +16,7 @@ const Timer = ({ reset }) => {
           payload: 0
         });
       }
-    }, 10000);
+    }, 1000);
     return () => clearTimeout(timer);
   }, [time]);
   return (

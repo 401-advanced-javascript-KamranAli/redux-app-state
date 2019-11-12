@@ -20,6 +20,14 @@ function reducer(state = initialState, action) {
       return { ...state, studies: state.studies + 1 };
     case 'START':
       return { ...state, start: true };
+    case 'RESET':
+      return {
+        coffees: 0,
+        snacks: 0,
+        naps: 0,
+        studies: 0,
+        start: false
+      };
     default:
       return state;
   }

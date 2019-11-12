@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Controls from '../components/controls/Controls';
@@ -6,24 +6,30 @@ import Face from '../components/face/Face';
 import actions from './MoodsActions';
 import { getFace } from './MoodsSelectors';
 import Start from '../components/Start/Start';
+import Timer from '../components/Start/Timer';
 
-const Moods = ({ state, faceAction, handleStart }) => {
+const Moods = ({ state, faceAction, handleStart, reset }) => {
+  // const [start, setStart] = useState(false);
   const face = getFace(state);
   const controlActions = actions.map(action => ({
     ...action,
     count: state[action.stateName]
   }));
+  // const handleClick = () => {
+  //   setStart(true);
+  // };
 
   if(!state.start) {
     return <Start handleStart={handleStart} />;
+  } else {
+    return (
+      <>
+        <Controls actions={controlActions} handleSelection={faceAction} />
+        <Face emoji={face} />
+        <Timer reset={reset} />
+      </>
+    );
   }
-
-  return (
-    <>
-      <Controls actions={controlActions} handleSelection={faceAction} />
-      <Face emoji={face} />
-    </>
-  );
 };
 
 const mapStateToProps = state => (
