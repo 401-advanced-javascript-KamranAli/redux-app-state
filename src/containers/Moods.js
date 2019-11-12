@@ -16,6 +16,7 @@ const Moods = ({ state, faceAction }) => {
     <>
       <Controls actions={controlActions} handleSelection={faceAction} />
       <Face emoji={face} />
+      <button>Start Game</button>
     </>
   );
 };
