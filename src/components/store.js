@@ -25,8 +25,7 @@ function reducer(state = initialState, action) {
         coffees: 0,
         snacks: 0,
         naps: 0,
-        studies: 0,
-        start: false
+        studies: 0
       };
     default:
       return state;
